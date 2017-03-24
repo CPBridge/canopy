@@ -45,7 +45,7 @@ installation instructions, explanations and examples.
 
 ### Author
 
-Canopy was written by [Chris Bridge](chrispbridge.wordpress.com) at the
+Canopy was written by [Chris Bridge](http://chrispbridge.wordpress.com) at the
 University of Oxford's Institute of Biomedical Engineering.
 
 ### Related
@@ -56,4 +56,4 @@ paper:
 
 - C.P. Bridge, C. Ioannou, and J.A. Noble, “Automated Annotation and Quantitative Description of Ultrasound Videos of the Fetal Heart”, *Medical Image Analysis 36* (February 2017) pp. 147-161. Open access available [here](http://dx.doi.org/10.1016/j.media.2016.11.006).
 
-or on the authors website at <http://chrispbridge.wordpress.com/research>.
+or on the author's website at <http://chrispbridge.wordpress.com/research>.
