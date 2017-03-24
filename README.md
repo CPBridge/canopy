@@ -40,7 +40,7 @@ following popular, open-source libraries:
 
 ### Documentation
 
-The full documentation for the library is provided [here](https://github.com/CPBridge/canopy), and includes
+The full documentation for the library is provided [here](https://cpbridge.github.io/canopy/index.html), and includes
 installation instructions, explanations and examples.
 
 ### Author
