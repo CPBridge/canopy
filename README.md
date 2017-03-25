@@ -16,6 +16,13 @@ forests using multi-threading with OpenMP.
 allowing for highly flexible and efficient models for image processing and other
 applications.
 
+Canopy is unashamedly an advanced tool, intended for users with a reasonable
+familiarity with C++ who are prepared to dig into the details of how random
+forests work to create new, efficient algorithms tailored to their own specific
+purpose. If you just want a quick tool to classify your personal collection of
+[iris stamens](https://en.wikipedia.org/wiki/Iris_flower_data_set), it probably
+isn't what you are looking for...
+
 ### Features
 
 The library contains a base class, `randomForestBase`, from which a range of

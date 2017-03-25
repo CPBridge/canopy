@@ -1,0 +1,141 @@
+/*!
+\mainpage Canopy Tutorial
+
+- \subpage installation "Installation Guide"
+- \subpage overview "Overview"
+- \subpage existing "Using Existing Models"
+- \subpage creating "Creating Your Own Random Forest Model"
+
+*/
+
+/*!
+\page installation Installation Guide
+
+\section dependencies Install Dependencies
+
+Firstly you will need to ensure that you have the Canopy's dependencies installed,
+this includes:
+
+- \b C++11: A C++ compiler that supports the C++11 standard or later. This includes recent
+versions of all the major compilers on all the major platforms. Additionally, you
+may find Canopy easier to use if you can use features from the more recent C++14
+standard (such as generic lambdas).
+- \b OpenMP: A compiler that supports the <A href="http://openmp.org/">OpenMP</A>
+standard for multi-threading. Again this includes the major compilers on major
+systems. Canopy \b will compile and run in single-threaded mode without this,
+but will be much slower.
+- \b Boost: The open-source <a href="http://www.boost.org">Boost</a>
+<a href="http://www.boost.org/doc/libs/1_62_0/libs/math/doc/html/special.html">
+special functions</a> and <a href="http://www.boost.org/doc/libs/1_63_0/libs/iterator/doc/index.html">
+iterator</a> libraries. These can be easily installed from package managers
+on most GNU/Linux distributions as well as MacPorts or Homebrew on MacOS. Typically
+it is easier to install all the Boost libraries at once. E.g. on Ubuntu
+\code{bash}
+sudo apt-get install libboost-all-dev
+\endcode
+- \b Eigen: The open-source <a href="http://eigen.tuxfamily.org">Eigen</a>
+library for linear algebra. Again this can be easily installed from standard
+package managers. E.g. on Ubuntu:
+\code{bash}
+sudo apt-get install libeigen3-dev
+\endcode
+If you do not intend to use canopy's \c circularRegressor class, you do not
+need to have Eigen installed.
+
+\section get-canopy Get Canopy
+
+
+Once you have these dependencies installed, you can go ahead and install canopy
+by cloning the repository on github. E.g.
+\code{bash}
+cd /path/where/you/want/canopy
+git clone https://github.com/CPBridge/canopy.git
+\endcode
+
+And that's it! Since canopy is a header-only library, you don't need to build
+anything.
+
+\section compile Compiling User Code
+
+In order to compile your own code using canopy, you need to make sure you are
+compiling with c++11 (or later), are using OpenMP, and list canopy's include
+directory in the include dependencies. E.g. to compile a programme in \c
+ user_code.cpp with the \c g++ compiler:
+\code{bash}
+g++ -std=c++11 -fopenmp -I /path/to/canopy/include user_code.cpp
+\endcode
+*/
+
+/*!
+\page overview Overview
+
+\section forests Random Forests
+
+In order to describe how the canopy library works, we will first need an abstract
+description of the random forests algorithm. I recommend the following as an
+excellent thorough introduction:
+
+- A. Criminisi, J. Shotton and E. Konukoglu. <a href="https://www.microsoft.com/en-us/research/publication/decision-forests-for-classification-regression-density-estimation-manifold-learning-and-semi-supervised-learning/">Decision Forests for Classification,
+Regression, Density Estimation, Manifold Learning and Semi-Supervised Learning</a>.
+Technical Report. Microsoft Research.
+
+A random forest is a collection of binary decision trees that is used to predict
+some quantity based on some <b>input features</b>. We will refer to the quantity
+being predicted as a <b>label</b>. The nature of the label will vary with the
+task being performed. For example, in a classification task, the label wil be a
+discrete (integer) variable representing the class. For a regression problem, the
+label will be a continuous quantity (represented by a floating point number), etc.
+The features can be similarly general, they could be a set of pre-recorded
+measurements, or the result of some function applied to an image, video, or signal.
+
+A data point is passed into the <b>root node</b> of each tree in the forest, and
+is passed down the tree until it reaches a <b>leaf node</b>. Each node looks at
+the values of some of the features in order to decide whether to pass the data
+point down to its left or right <b>child node</b>. This repeats until the leaf
+node, which has no children, is reached. The leaf node contains some distribution
+over the value of the label given the input, we will call such a distribution a
+<b>node distribution</b>.
+
+There are two tasks that the forest models created using canopy can perform at this
+point:
+
+- Combine the <b>node distributions</b> reached in each of the trees to give a
+new distribution over the value of the label. We will call this distribution an
+<b>output distribution</b>. In general its form may be the same as the <b>node
+distribution</b> or it may be different.
+We will call this the <b>distribution prediction</b> task.
+- Evaluate the probability of a certain value of the label variable. This is done
+by using the <b>node distributions</b> reached in each tree to evaluate the
+probability of that label, and then averaging this result over all the trees.
+We will call this the <b>probability evaluation</b> task.
+
+In order to train each tree in the forests, a randomly selected set of features
+are tested to see which can split the labels in the training set to give the
+<b>pureest</b> child nodes. The concrete definition of <b>purity</b> depends on
+the type of the labels and the particular problem at hand.
+
+\section randomForestBase The randomForestBase Class
+
+The canopy library uses a single base class called \c randomForestBase to provide
+the general framework for training and testing random forests as described in
+the previous section.
+
+The \c randomForestBase class looks something like this:
+
+\code{.cpp}
+template <class TDerived, class TLabel, class TNodeDist, class TOutputDist, unsigned TNumParams>
+class randomForestBase
+{
+	//...
+};
+\endcode
+
+*/
+
+/*!
+\page existing "Using Existing Models"
+*/
+
+/*!
+\page creating "Creating Your Own Random Forest Model"
+*/
