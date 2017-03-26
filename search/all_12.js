@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['xlogx_5fprecalc',['xlogx_precalc',['../classcanopy_1_1classifier.html#aa76be4da13d92bd6dcdea6aeaa53db61',1,'canopy::classifier']]]
+  ['writetofile',['writeToFile',['../classcanopy_1_1random_forest_base.html#a677e06d4acfdb2e0fdffc8e2971a66df',1,'canopy::randomForestBase']]]
 ];

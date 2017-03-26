@@ -1,8 +1,12 @@
 var searchData=
 [
-  ['getclassnames',['getClassNames',['../classcanopy_1_1classifier.html#af35dec8c2204ab75023062ba7900b4fe',1,'canopy::classifier']]],
-  ['getfeaturedefinitionstring',['getFeatureDefinitionString',['../classcanopy_1_1random_forest_base.html#a4276dd9b1b3137cc26c3fb89494b375e',1,'canopy::randomForestBase']]],
-  ['getkappa',['getKappa',['../classcanopy_1_1von_mises_distribution.html#ac9e9a9f1cfd49654abf0f9978eacd62f',1,'canopy::vonMisesDistribution']]],
-  ['getmu',['getMu',['../classcanopy_1_1von_mises_distribution.html#ab658a4d9db332b124717b8c8499457bb',1,'canopy::vonMisesDistribution']]],
-  ['getnumberclasses',['getNumberClasses',['../classcanopy_1_1classifier.html#af3f1330730c050bf69ae1f3835df0bff',1,'canopy::classifier']]]
+  ['fastdiscreteentropy',['fastDiscreteEntropy',['../classcanopy_1_1random_forest_base.html#a8fcbaa753118df056efb4894279d8d13',1,'canopy::randomForestBase']]],
+  ['fastdiscreteentropysplit',['fastDiscreteEntropySplit',['../classcanopy_1_1random_forest_base.html#ad8c035bc917583018a0ce3cddf4a720c',1,'canopy::randomForestBase']]],
+  ['feature_5fheader',['feature_header',['../classcanopy_1_1random_forest_base.html#a1762732027985afe09ab09c722be1e71',1,'canopy::randomForestBase']]],
+  ['feature_5fstring',['feature_string',['../classcanopy_1_1random_forest_base.html#a2cc500e6049e65eadeaa97f3d6a47466',1,'canopy::randomForestBase']]],
+  ['findleafsingle',['findLeafSingle',['../classcanopy_1_1random_forest_base.html#af809ee6c8d2db1014f836a4c4f7a77c4',1,'canopy::randomForestBase']]],
+  ['findleavesgroupwise',['findLeavesGroupwise',['../classcanopy_1_1random_forest_base.html#ab98245bd4f015b9e6652f6744d0690ec',1,'canopy::randomForestBase']]],
+  ['fit',['fit',['../classcanopy_1_1von_mises_distribution.html#a508ffd3250f971d160408825ced3ae15',1,'canopy::vonMisesDistribution::fit()'],['../classcanopy_1_1discrete_distribution.html#ad8e61feac5adf566032b93d7a5ed902c',1,'canopy::discreteDistribution::fit()']]],
+  ['fit_5fsplit_5fnodes',['fit_split_nodes',['../classcanopy_1_1random_forest_base.html#a6dda9d0ce7c2dc57f3b747302d1492f8',1,'canopy::randomForestBase']]],
+  ['forest',['forest',['../classcanopy_1_1random_forest_base.html#a13f902b8befa1467c4580d41fb7e7376',1,'canopy::randomForestBase']]]
 ];

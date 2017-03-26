@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['min_5finfo_5fgain',['min_info_gain',['../classcanopy_1_1circular_regressor.html#a411435cec07da98b172bbed8531b0089',1,'canopy::circularRegressor::min_info_gain()'],['../classcanopy_1_1classifier.html#a3b0a2fdbf404200678d8022342368f2b',1,'canopy::classifier::min_info_gain()']]],
-  ['mininfogain',['minInfoGain',['../classcanopy_1_1circular_regressor.html#a74179e6c30e4cc42b2ce450c62203409',1,'canopy::circularRegressor::minInfoGain()'],['../classcanopy_1_1classifier.html#accf023f14cefffbce6a36365a0540bd5',1,'canopy::classifier::minInfoGain()']]],
-  ['mu',['mu',['../classcanopy_1_1von_mises_distribution.html#adc7cfe03867b0d99f7c40ab0ecbdaf2e',1,'canopy::vonMisesDistribution']]]
+  ['kappa',['kappa',['../classcanopy_1_1von_mises_distribution.html#a95201c324e4e4df4b6d7e64ca01ccd85',1,'canopy::vonMisesDistribution']]]
 ];

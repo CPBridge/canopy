@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Canopy: /local/ball3996/dphil/github/canopy/include/canopy/circularRegressor -&gt; randomForestBase Relation</title>
+<title>Canopy: Installation Guide</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -83,11 +84,35 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_9a6aa5b8a4359a80f062f13769531811.html">canopy</a></li><li class="navelem"><a class="el" href="dir_31f2bfd2e6e5288390ad12145e30d23c.html">circularRegressor</a></li>  </ul>
+<li class="navelem"><a class="el" href="index.html">Overview</a></li>  </ul>
 </div>
 </div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Installation Guide </div>  </div>
+</div><!--header-->
 <div class="contents">
-<h3>circularRegressor &rarr; randomForestBase Relation</h3><table class="dirtab"><tr class="dirtab"><th class="dirtab">File in include/canopy/circularRegressor</th><th class="dirtab">Includes file in include/canopy/randomForestBase</th></tr><tr class="dirtab"><td class="dirtab"><a class="el" href="circular_regressor_8hpp.html">circularRegressor.hpp</a></td><td class="dirtab"><a class="el" href="random_forest_base_8hpp.html">randomForestBase.hpp</a></td></tr></table></div><!-- contents -->
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#dependencies">Install Dependencies</a></li>
+<li class="level1"><a href="#get-canopy">Get Canopy</a></li>
+<li class="level1"><a href="#compile">Compiling User Code</a></li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="dependencies"></a>
+Install Dependencies</h1>
+<p>Firstly you will need to ensure that you have the Canopy's dependencies installed, this includes:</p>
+<ul>
+<li><b>C++11</b>: A C++ compiler that supports the C++11 standard or later. This includes recent versions of all the major compilers on all the major platforms. Additionally, you may find Canopy easier to use if you can use features from the more recent C++14 standard (such as generic lambdas).</li>
+<li><b>OpenMP:</b> A compiler that supports the <a href="http://openmp.org/">OpenMP</a> standard for multi-threading. Again this includes the major compilers on major systems. Canopy <b>will</b> compile and run in single-threaded mode without this, but will be much slower.</li>
+<li><b>Boost:</b> The open-source <a href="http://www.boost.org">Boost</a> <a href="http://www.boost.org/doc/libs/1_62_0/libs/math/doc/html/special.html">special functions</a> and <a href="http://www.boost.org/doc/libs/1_63_0/libs/iterator/doc/index.html">iterator</a> libraries. These can be easily installed from package managers on most GNU/Linux distributions as well as MacPorts or Homebrew on MacOS. Typically it is easier to install all the Boost libraries at once. E.g. on Ubuntu <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;sudo apt-get install libboost-all-dev</div></div><!-- fragment --></li>
+<li><b>Eigen:</b> The open-source <a href="http://eigen.tuxfamily.org">Eigen</a> library for linear algebra. Again this can be easily installed from standard package managers. E.g. on Ubuntu: <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;sudo apt-get install libeigen3-dev</div></div><!-- fragment --> If you do not intend to use canopy's <code>circularRegressor</code> class, you do not need to have Eigen installed.</li>
+</ul>
+<h1><a class="anchor" id="get-canopy"></a>
+Get Canopy</h1>
+<p>Once you have these dependencies installed, you can go ahead and install canopy by cloning the repository on github. E.g. </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;cd /path/where/you/want/canopy</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;git clone https://github.com/CPBridge/canopy.git</div></div><!-- fragment --><p>And that's it! Since canopy is a header-only library, you don't need to build anything.</p>
+<h1><a class="anchor" id="compile"></a>
+Compiling User Code</h1>
+<p>In order to compile your own code using canopy, you need to make sure you are compiling with c++11 (or later), are using OpenMP, and list canopy's include directory in the include dependencies. E.g. to compile a programme in <code>user_code.cpp</code> with the <code>g++</code> compiler: </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;g++ -std=c++11 -fopenmp -I /path/to/canopy/include user_code.cpp</div></div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

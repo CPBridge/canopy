@@ -1,3 +1,3 @@
-<map id="/local/ball3996/dphil/github/canopy/include/canopy/circularRegressor/vonMisesDistribution.hpp" name="/local/ball3996/dphil/github/canopy/include/canopy/circularRegressor/vonMisesDistribution.hpp">
-<area shape="rect" id="node7" href="$von_mises_kappa_functor_8hpp.html" title="Contains declaration of vonMisesKappaFunctor struct, used for numerically solving for the kappa param..." alt="" coords="558,124,746,165"/>
+<map id="vonMisesDistribution.hpp" name="vonMisesDistribution.hpp">
+<area shape="rect" id="node7" href="$von_mises_kappa_functor_8hpp.html" title="Contains declaration of the canopy::vonMisesKappaFunctor struct, used for numerically solving for the..." alt="" coords="558,80,746,121"/>
 </map>

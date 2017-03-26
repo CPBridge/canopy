@@ -1,5 +1,5 @@
-<map id="/local/ball3996/dphil/github/canopy/include/canopy/randomForestBase/randomForestBase.tpp" name="/local/ball3996/dphil/github/canopy/include/canopy/randomForestBase/randomForestBase.tpp">
-<area shape="rect" id="node2" href="$random_forest_base_8hpp.html" title="Contains the declaration of the randomForestBase class. " alt="" coords="108,124,291,195"/>
-<area shape="rect" id="node3" href="$circular_regressor_8hpp.html" title="Contains declaration of the circularRegressor class. " alt="" coords="5,243,180,313"/>
-<area shape="rect" id="node4" href="$classifier_8hpp.html" title="Contains the declaration of the classifier class. " alt="" coords="205,250,410,306"/>
+<map id="randomForestBase.tpp" name="randomForestBase.tpp">
+<area shape="rect" id="node2" href="$random_forest_base_8hpp.html" title="Contains the declaration of the canopy::randomForestBase class. " alt="" coords="75,80,232,107"/>
+<area shape="rect" id="node3" href="$circular_regressor_8hpp.html" title="Contains declaration of the canopy::circularRegressor class. " alt="" coords="5,155,155,181"/>
+<area shape="rect" id="node4" href="$classifier_8hpp.html" title="Contains the declaration of the canopy::classifier class. " alt="" coords="179,155,277,181"/>
 </map>

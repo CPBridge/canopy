@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -112,6 +113,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
  <a href="classcanopy_1_1random_forest_base.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="random_forest_base_8hpp_source.html">randomForestBase.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for canopy::randomForestBase&lt; TDerived, TLabel, TNodeDist, TOutputDist, TNumParams &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="classcanopy_1_1random_forest_base__coll__graph.png" border="0" usemap="#canopy_1_1random_forest_base_3_01_t_derived_00_01_t_label_00_01_t_node_dist_00_01_t_output_dist_00_01_t_num_params_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="canopy_1_1random_forest_base_3_01_t_derived_00_01_t_label_00_01_t_node_dist_00_01_t_output_dist_00_01_t_num_params_01_4_coll__map" id="canopy_1_1random_forest_base_3_01_t_derived_00_01_t_label_00_01_t_node_dist_00_01_t_output_dist_00_01_t_num_params_01_4_coll__map">
+<area shape="rect" id="node2" title="STL class. " alt="" coords="1249,15,1329,42"/>
+<area shape="rect" id="node3" title="STL class. " alt="" coords="932,5,1059,47"/>
+<area shape="rect" id="node5" href="structcanopy_1_1random_forest_base_1_1tree.html" title="Tree structure &#45; represents a single tree. " alt="" coords="881,70,1109,126"/>
+<area shape="rect" id="node7" href="structcanopy_1_1random_forest_base_1_1node.html" title="Node structure &#45; represents one node in a tree. " alt="" coords="305,70,540,126"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -533,7 +545,7 @@ template&lt;class TId , class TFeatureFunctor &gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TId</td><td>Type of the ID used to identify the data point. </td></tr>
-    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a groupwise feature functor object, meaning it must define operator() with a certain form. </td></tr>
+    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a <a class="el" href="basic.html#single">single feature functor</a> object, meaning it must define operator() with a certain form. </td></tr>
   </table>
   </dd>
 </dl>
@@ -608,7 +620,7 @@ template&lt;class TIdIterator , class TFeatureFunctor &gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">TIdIterator</td><td>Type of the iterator to the IDs. Must be a random access iterator and dereference to the TId type expected by the feature functor. </td></tr>
-    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a groupwise feature functor object, meaning it must define operator() with a certain form. </td></tr>
+    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a <a class="el" href="basic.html#groupwise">groupwise feature functor</a> object, meaning it must define operator() with a certain form. </td></tr>
   </table>
   </dd>
 </dl>
@@ -757,7 +769,7 @@ template&lt;class TIdIterator , class TOutputIterator , class TFeatureFunctor &g
   <table class="tparams">
     <tr><td class="paramname">TIdIterator</td><td>Type of the iterator to the IDs. Must be a random access iterator and dereference to the TId type expected by the feature functor. </td></tr>
     <tr><td class="paramname">TOutputIterator</td><td>Type of the iterator to the output distributions. Must be a forward output iterator that dereferences to TOutputDist. </td></tr>
-    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a groupwise feature functor object, meaning it must define operator() with a certain form. </td></tr>
+    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a <a class="el" href="basic.html#groupwise">groupwise feature functor</a> object, meaning it must define operator() with a certain form. </td></tr>
   </table>
   </dd>
 </dl>
@@ -822,7 +834,7 @@ template&lt;class TIdIterator , class TOutputIterator , class TFeatureFunctor &g
   <table class="tparams">
     <tr><td class="paramname">TIdIterator</td><td>Type of the iterator to the IDs. Must be a random access iterator and dereference to the TId type expected by the feature functor. </td></tr>
     <tr><td class="paramname">TOutputIterator</td><td>Type of the iterator to the output distributions. Must be a forward output iterator that dereferences to TOutputDist. </td></tr>
-    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a single feature functor object, meaning it must define operator() with a certain form. </td></tr>
+    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a <a class="el" href="basic.html#single">single feature functor</a> object, meaning it must define operator() with a certain form. </td></tr>
   </table>
   </dd>
 </dl>
@@ -900,7 +912,7 @@ template&lt;class TIdIterator , class TLabelIterator , class TOutputIterator , c
     <tr><td class="paramname">TIdIterator</td><td>Type of the iterator to the IDs. Must be a random access iterator and dereference to the TId type expected by the feature functor. </td></tr>
     <tr><td class="paramname">TLabelIterator</td><td>Type of the iterator to the IDs. Must be a random access iterator and dereference to the TLabel type of the forest (or to something trivially convertible to that type). </td></tr>
     <tr><td class="paramname">TOutputIterator</td><td>Type of the iterator to the output. Must be a forward output iterator that dereferences to a type that supports assignment to float. </td></tr>
-    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a groupwise feature functor object, meaning it must define operator() with a certain form. </td></tr>
+    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a <a class="el" href="basic.html#groupwise">groupwise feature functor</a> object, meaning it must define operator() with a certain form. </td></tr>
   </table>
   </dd>
 </dl>
@@ -994,7 +1006,7 @@ template&lt;class TIdIterator , class TLabelIterator , class TOutputIterator , c
     <tr><td class="paramname">TLabelIterator</td><td>Type of the iterator to the IDs. Must be a random access iterator and dereference to the TLabel type of the forest (or to something trivially convertible to that type). </td></tr>
     <tr><td class="paramname">TOutputIterator</td><td>Type of the iterator to the output. Must be a forward output iterator that dereferences to a type that supports assignment to float. </td></tr>
     <tr><td class="paramname">TBinaryFunction</td><td>The type of the binary_function argument. Must be a function object that has an operator() of the form float operator()(TOutput, float) where TOutput is the type that TOutputIterator dereferences to. </td></tr>
-    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a groupwise feature functor object, meaning it must define operator() with a certain form. </td></tr>
+    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a <a class="el" href="basic.html#groupwise">groupwise feature functor</a> object, meaning it must define operator() with a certain form. </td></tr>
     <tr><td class="paramname">TPDFFunctor</td><td>The type of the pdf_functor argument. Must be a function object that has an operator() of the form float operator()(TNodeDist*, TLabel, TId). </td></tr>
   </table>
   </dd>
@@ -1077,7 +1089,7 @@ template&lt;class TIdIterator , class TLabelIterator , class TOutputIterator , c
     <tr><td class="paramname">TIdIterator</td><td>Type of the iterator to the IDs. Must be a random access iterator and dereference to the TId type expected by the feature functor. </td></tr>
     <tr><td class="paramname">TLabelIterator</td><td>Type of the iterator to the IDs. Must be a random access iterator and dereference to the TLabel type of the forest (or to something trivially convertible to that type). </td></tr>
     <tr><td class="paramname">TOutputIterator</td><td>Type of the iterator to the output. Must be a forward output iterator that dereferences to a type that supports assignment to float. </td></tr>
-    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a groupwise feature functor object, meaning it must define operator() with a certain form. </td></tr>
+    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a <a class="el" href="basic.html#single">single feature functor</a> object, meaning it must define operator() with a certain form. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1171,7 +1183,7 @@ template&lt;class TIdIterator , class TLabelIterator , class TOutputIterator , c
     <tr><td class="paramname">TLabelIterator</td><td>Type of the iterator to the IDs. Must be a random access iterator and dereference to the TLabel type of the forest (or to something trivially convertible to that type). </td></tr>
     <tr><td class="paramname">TOutputIterator</td><td>Type of the iterator to the output. Must be a forward output iterator that dereferences to a type that supports assignment to float. </td></tr>
     <tr><td class="paramname">TBinaryFunction</td><td>The type of the binary_function argument. Must be a function object that has an operator() of the form float operator()(TOutput, float) where TOutput is the type that TOutputIterator dereferences to. </td></tr>
-    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a groupwise feature functor object, meaning it must define operator() with a certain form. </td></tr>
+    <tr><td class="paramname">TFeatureFunctor</td><td>The type of the feature functor object. Must meet the specifications for a <a class="el" href="basic.html#single">single feature functor</a>, meaning it must define operator() with a certain form. </td></tr>
     <tr><td class="paramname">TPDFFunctor</td><td>The type of the pdf_functor argument. Must be a function object that has an operator() of the form float operator()(TNodeDist*, TLabel, TId). </td></tr>
   </table>
   </dd>
@@ -1358,8 +1370,8 @@ template&lt;class TIdIterator , class TLabelIterator , class TFeatureFunctor , c
   <table class="tparams">
     <tr><td class="paramname">TIdIterator</td><td>Type of the iterator used to access the training IDs. Must be a random access iterator that dereferences to the ID type expected by feature_functor. </td></tr>
     <tr><td class="paramname">TLabelIterator</td><td>Type of the iterator used to access the label variables. Must be a random access iterator that dereferences to type TLabel. </td></tr>
-    <tr><td class="paramname">TFeatureFunctor</td><td>Type of the feature_functor parameter. Must be a function object with an operator() of a specfied form. </td></tr>
-    <tr><td class="paramname">TParameterFunctor</td><td>Type of the feature_functor parameter. Must be a function object with an operator() of the form void operator()(std::array&lt;int,TNumParams&gt;&amp;) </td></tr>
+    <tr><td class="paramname">TFeatureFunctor</td><td>Type of the feature_functor parameter. Must be a <a class="el" href="basic.html#groupwise">groupwise feature functor</a> object with an operator() of a specified form. </td></tr>
+    <tr><td class="paramname">TParameterFunctor</td><td>Type of the feature_functor parameter. Must be a <a class="el" href="basic.html#params">parameter generator functor</a> object with an operator() of the form void operator()(std::array&lt;int,TNumParams&gt;&amp;) </td></tr>
   </table>
   </dd>
 </dl>
@@ -1410,8 +1422,8 @@ template&lt;class TDerived , class TLabel , class TNodeDist , class TOutputDist 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/local/ball3996/dphil/github/canopy/include/canopy/randomForestBase/<a class="el" href="random_forest_base_8hpp_source.html">randomForestBase.hpp</a></li>
-<li>/local/ball3996/dphil/github/canopy/include/canopy/randomForestBase/<a class="el" href="random_forest_base_8tpp.html">randomForestBase.tpp</a></li>
+<li><a class="el" href="random_forest_base_8hpp_source.html">randomForestBase.hpp</a></li>
+<li><a class="el" href="random_forest_base_8tpp.html">randomForestBase.tpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classcanopy_1_1random_forest_base.html" title="canopy::randomForestBase\l\&lt; classifier\&lt; TNumParams\l \&gt;, int, discreteDistribution,\l discreteDistribution, TNumParams \&gt;" alt="" coords="5,5,244,76"/>
-<area shape="rect" id="node2" href="$classcanopy_1_1classifier.html" title="Implements a random forest classifier model to predict a discrete output label. " alt="" coords="292,20,419,61"/>
+<area shape="rect" id="node1" href="$classcanopy_1_1random_forest_base.html" title="canopy::randomForestBase\l\&lt; circularRegressor\&lt; TNumParams\l \&gt;, float, vonMisesDistribution,\l vonMisesDistribution, TNumParams \&gt;" alt="" coords="5,5,255,76"/>
+<area shape="rect" id="node2" href="$classcanopy_1_1circular_regressor.html" title="Implements a random forest classifier model to predict a circular&#45;valued output label. " alt="" coords="303,20,477,61"/>
 </map>

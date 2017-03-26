@@ -1,3 +1,7 @@
 <map id="canopy::circularRegressor&lt; TNumParams &gt;" name="canopy::circularRegressor&lt; TNumParams &gt;">
-<area shape="rect" id="node2" href="$classcanopy_1_1random_forest_base.html" title="canopy::randomForestBase\l\&lt; circularRegressor\&lt; TNumParams\l \&gt;, float, vonMisesDistribution,\l vonMisesDistribution, TNumParams \&gt;" alt="" coords="5,5,255,76"/>
+<area shape="rect" id="node2" href="$classcanopy_1_1random_forest_base.html" title="canopy::randomForestBase\l\&lt; circularRegressor\&lt; TNumParams\l \&gt;, float, vonMisesDistribution,\l vonMisesDistribution, TNumParams \&gt;" alt="" coords="1501,29,1751,100"/>
+<area shape="rect" id="node3" title="STL class. " alt="" coords="1249,14,1329,41"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="932,5,1059,47"/>
+<area shape="rect" id="node6" href="$structcanopy_1_1random_forest_base_1_1tree.html" title="Tree structure &#45; represents a single tree. " alt="" coords="881,70,1109,126"/>
+<area shape="rect" id="node8" href="$structcanopy_1_1random_forest_base_1_1node.html" title="Node structure &#45; represents one node in a tree. " alt="" coords="305,70,540,126"/>
 </map>

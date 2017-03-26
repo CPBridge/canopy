@@ -1,0 +1,6 @@
+<map id="canopy::randomForestBase&lt; TDerived, TLabel, TNodeDist, TOutputDist, TNumParams &gt;" name="canopy::randomForestBase&lt; TDerived, TLabel, TNodeDist, TOutputDist, TNumParams &gt;">
+<area shape="rect" id="node2" title="STL class. " alt="" coords="1249,15,1329,42"/>
+<area shape="rect" id="node3" title="STL class. " alt="" coords="932,5,1059,47"/>
+<area shape="rect" id="node5" href="$structcanopy_1_1random_forest_base_1_1tree.html" title="Tree structure &#45; represents a single tree. " alt="" coords="881,70,1109,126"/>
+<area shape="rect" id="node7" href="$structcanopy_1_1random_forest_base_1_1node.html" title="Node structure &#45; represents one node in a tree. " alt="" coords="305,70,540,126"/>
+</map>
