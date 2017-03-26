@@ -130,6 +130,96 @@ class randomForestBase
 };
 \endcode
 
+There are several template parameters that allow this classes derived from this base class to implement a wide range of different behaviours:
+
+- <b>TDerived</b> This is  the type of the derived class, needed in order to use the CRTP form of static polymorphism. 
+- <b>TLabel</b> The type of the <b>label</b> (the variable to be predicted). This can in principle be an arbitrary type.
+- <b>TNodeDist</b> This is the type of the <b>node distribution</b>, which must have a specific form dictated by the choice of <b>TLabel</b>.
+- <b>TOutputDist</b> This is the type of the <b>output distribution</b>, which must have a specific form dictated by the choice of <b>TNodeDist</b>.
+- <b>TNumParams</b> This is the number of parameters of the feature callback function.
+
+Specific random forest models may be derived from this base class using CRTP with a specific set 
+of these template parameters (although TNumParams is typically left unspecified). 
+
+Canopy preovides two pre-defined random forest models:
+
+- <b>classifier</b> A random forest classifier to predict a discrete label (TLabel = int) 
+with a discreteDistribution object serving as the node and output distribution type
+(TNodeDist = discreteDistribution and TOutputDist = discreteDistribution).
+- <b>circularRegressor</b>  A random forest model for predicting a circular-valued
+(angular) output variable, represented using a floating point number (TLabel = float)
+and using a vonMisesDistribution object as the node and output distribution type.
+
+\section functors Defining Feature Functors
+
+Canopy handles features using functor objects in order to give maximum flexibility
+for the feature calculation process to execute arbitrary code and access arbitrary data.
+
+There are two different forms of feature functor that are accepted by canopy under
+different circumstances. The difference between these two forms is how they 
+handle multiple test data.
+
+In both cases, the purpose of the functor object is to take some test points 
+identified by some ID type, apply some function to them specified by some 
+number of integer-valued parameters, and return a single floating-point
+value for each input ID as the result.
+
+The ID can be any arbitrary data type used to identify a test data point.
+The ID variables are not used or moved around by Canopy methods, so
+it really doesn't matter what this is as long as your own functors can make
+sense of it. In the simplest case (as in the provided example), the ID is simply 
+an integer representing the index of the test sample in some list. However, it
+could be more complicated than this, for example it could be a 2D vector 
+representing an image location in an image, or a 3D vector representing
+a 3D location within a volume image.
+
+The function that the functor applies to each test data point can be parameterised
+by an arbitrary number of integer-valued parameters, which are passed to the 
+functor by const reference in a std::array. The number of parameters is controlled 
+by the TNumParams template parameter of the base class. Again it is up to you to 
+define the meaning to these parameters, the Canopy code just passes them around
+without using them.
+
+The first of the two forms calculates the features for test data in a one-by-one fashion.
+We will refer to this form as the <b>Single Feature Functor</b> form.
+This is the simplest option and involves the smallest overhead.
+
+The form of this type is:
+
+\code{.cpp}
+\endcode
+
+The second form allows for calculating the features for multiple test points
+together. We will refer to this as the <b><Groupwise Feature Functor</b> form. 
+This can be advantageous when such a process can be made quicker 
+than evaluating the test data individually. For example, if the test data are different
+image locations in the same image, then it may be faster the perform some process
+(e.g. an FFT) on the entire image than work on each point individually.
+
+In both cases, the functor must provide the paranthesis operator, operator(), 
+of the form above. There are two ways to do this. The first is to define a custom 
+class or struct with and define the operator(). This allows you to encapsulate 
+the feature extraction process along with all its data in a single object.
+
+The second option is to use a C++11 lambda function. The advantage of this
+approach is that it can easily access data defined elsewhere in your programme
+via lambda captures. However, with C++11, you will need to manually work out
+all the types of the the operator() parameters, which ends up being quite complicated
+due to the iterator trickery buried within Canopy. Luckily however , the C++14 standard
+fixes this problem by allowing you to define generic lambdas using the auto keyword 
+in place of the types. 
+
+\section traning Training A Forest Model
+
+In order to train a model you must create a <b>Groupwise Feature Functor</b> object 
+and pass it to the randomForestBase's train() method. 
+
+Additionally, you must define a second functor object that generates valid combination of 
+parameters for your split functors on demand. Which combinations are valid depends entirely
+on the feature calculation process that you are using.
+
+The <b>Parameter Generator Functor</b> must take the following form:  
+
 */
 
 /*!
