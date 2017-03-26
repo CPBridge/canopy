@@ -38,7 +38,7 @@ int main()
 	std::uniform_int_distribution<int> uni_int_dist;
 	std::uniform_real_distribution<double> uni_real_dist;
 
-	/* Randomly generate 2D sigma and mu parameters for each class assuming
+	/* Randomly generate sigma and mu parameters for each class assuming
 	axis-aligned distributions for simplicity. These are arrays with classes
 	down the first dimension and the feature space dimension down the second */
 	std::array<std::array<double,N_DIMS>,N_CLASSES> mu;
