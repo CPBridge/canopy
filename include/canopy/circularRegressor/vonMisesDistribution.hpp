@@ -68,7 +68,6 @@ class vonMisesDistribution
 		template <class TLabelIterator, class TIdIterator>
 		void fit(TLabelIterator first_label, const TLabelIterator last_label, TIdIterator /*unused*/)
 		{
-			double R2, Re;
 			S = 0.0, C = 0.0;
 
 			const int n_data = std::distance(first_label,last_label);
@@ -80,14 +79,14 @@ class vonMisesDistribution
 				C += std::cos(*first_label);
 			}
 
-			R2 = S*S + C*C;
+			// Length of resultant vector
+			const double R2 = S*S + C*C;
 
 			// Mean direction
 			mu = std::atan2(S,C);
 
 			// Unbiased R statistic
-			//Re = std::sqrt( ( double(n_data)/(double(n_data) + 1.0) ) * (R2 - 1.0/double(n_data)) );
-			Re = std::sqrt(R2) / n_data;
+			const double Re = std::sqrt(R2) / n_data;
 
 			// Find the kappa parameter
 			if(Re > 0.98)
@@ -103,7 +102,6 @@ class vonMisesDistribution
 				Eigen::VectorXd kappa_vec(1);
 				kappa_vec << 25.0;
 				Eigen::HybridNonLinearSolver<vonMisesKappaFunctor> solver(vmftrinstance);
-				//info =
 				solver.hybrj1(kappa_vec);
 				kappa = kappa_vec(0,0);
 				pdf_normaliser = 1.0/(2.0*M_PI*boost::math::cyl_bessel_i(0,kappa));
