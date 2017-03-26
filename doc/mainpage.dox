@@ -1,15 +1,59 @@
 /*!
-\mainpage Canopy Tutorial
+\mainpage Overview
 
-- \subpage installation "Installation Guide"
-- \subpage overview "Overview"
-- \subpage existing "Using Existing Models"
-- \subpage creating "Creating Your Own Random Forest Model"
+\section Canopy
+
+Canopy is a C++ header-only template library for random forests.
+Random forests are a highly flexible and effective method for constructing machine
+learning models for a number of tasks by aggregating a number of decision trees.
+
+The focus of this library is on providing an implementation that:
+
+- Makes use of modern template-based programming techniques to provide a highly
+flexible framework allowing the user to produce models for different tasks, such
+as classification and regression.
+- Is highly efficient in order to be suitable for using in time-critical
+applications such as video processing. This is achieved with highly efficient
+code as well as by taking advantage of the parallelisable nature of random
+forests using multi-threading with OpenMP.
+- Allows the user to execute arbitrary code to calculate features as required,
+allowing for highly flexible and efficient models for image processing and
+other applications.
+
+Canopy is unashamedly an advanced tool, intended for users with a reasonable
+familiarity with C++ who are prepared to dig into the details of how random
+forests work to create new, efficient algorithms tailored to their own specific
+purpose. If you just want a quick tool to classify your personal collection of
+<a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">iris stamens</a>,
+it probably isn't what you are looking for...
+
+\section Repository
+
+The Canopy repository is located on <a href="https://github.com/CPBridge/canopy">Github</a>.
+
+\section Canopy Tutorial
+
+A full introduction to using the canopy library is provided in
+the following pages:
+
+- \subpage installation
+- \subpage basic
+- \subpage advanced
+
+You can access the full documentation of the library using the menu across the
+top of the page.
+
+\section Author
+
+Canopy was written by <a href="http://chrispbridge.wordpress.com">Chris Bridge</a>
+at the University of Oxford's Institute of Biomedical Engineering.
 
 */
 
 /*!
 \page installation Installation Guide
+
+\tableofcontents
 
 \section dependencies Install Dependencies
 
@@ -30,13 +74,13 @@ special functions</a> and <a href="http://www.boost.org/doc/libs/1_63_0/libs/ite
 iterator</a> libraries. These can be easily installed from package managers
 on most GNU/Linux distributions as well as MacPorts or Homebrew on MacOS. Typically
 it is easier to install all the Boost libraries at once. E.g. on Ubuntu
-\code{bash}
+\code{.sh}
 sudo apt-get install libboost-all-dev
 \endcode
 - \b Eigen: The open-source <a href="http://eigen.tuxfamily.org">Eigen</a>
 library for linear algebra. Again this can be easily installed from standard
 package managers. E.g. on Ubuntu:
-\code{bash}
+\code{.sh}
 sudo apt-get install libeigen3-dev
 \endcode
 If you do not intend to use canopy's \c circularRegressor class, you do not
@@ -47,7 +91,7 @@ need to have Eigen installed.
 
 Once you have these dependencies installed, you can go ahead and install canopy
 by cloning the repository on github. E.g.
-\code{bash}
+\code{.sh}
 cd /path/where/you/want/canopy
 git clone https://github.com/CPBridge/canopy.git
 \endcode
@@ -61,19 +105,21 @@ In order to compile your own code using canopy, you need to make sure you are
 compiling with c++11 (or later), are using OpenMP, and list canopy's include
 directory in the include dependencies. E.g. to compile a programme in \c
  user_code.cpp with the \c g++ compiler:
-\code{bash}
+\code{.sh}
 g++ -std=c++11 -fopenmp -I /path/to/canopy/include user_code.cpp
 \endcode
 */
 
 /*!
-\page overview Overview
+\page basic Overview and Basic Usage
+
+\tableofcontents
 
 \section forests Random Forests
 
 In order to describe how the canopy library works, we will first need an abstract
 description of the random forests algorithm. I recommend the following as an
-excellent thorough introduction:
+excellent thorough introduction for those who need to learn or revise the basics:
 
 - A. Criminisi, J. Shotton and E. Konukoglu. <a href="https://www.microsoft.com/en-us/research/publication/decision-forests-for-classification-regression-density-estimation-manifold-learning-and-semi-supervised-learning/">Decision Forests for Classification,
 Regression, Density Estimation, Manifold Learning and Semi-Supervised Learning</a>.
@@ -100,9 +146,9 @@ There are two tasks that the forest models created using canopy can perform at t
 point:
 
 - Combine the <b>node distributions</b> reached in each of the trees to give a
-new distribution over the value of the label. We will call this distribution an
-<b>output distribution</b>. In general its form may be the same as the <b>node
-distribution</b> or it may be different.
+single new distribution over the value of the label. We will call this
+distribution an <b>output distribution</b>. In general its form may be the same
+as the <b>node distribution</b> or it may be different.
 We will call this the <b>distribution prediction</b> task.
 - Evaluate the probability of a certain value of the label variable. This is done
 by using the <b>node distributions</b> reached in each tree to evaluate the
@@ -111,12 +157,12 @@ We will call this the <b>probability evaluation</b> task.
 
 In order to train each tree in the forests, a randomly selected set of features
 are tested to see which can split the labels in the training set to give the
-<b>pureest</b> child nodes. The concrete definition of <b>purity</b> depends on
+<b>purest</b> child nodes. The concrete definition of <b>purity</b> depends on
 the type of the labels and the particular problem at hand.
 
 \section randomForestBase The randomForestBase Class
 
-The canopy library uses a single base class called \c randomForestBase to provide
+The canopy library uses a single base class called  canopy::randomForestBase to provide
 the general framework for training and testing random forests as described in
 the previous section.
 
@@ -130,102 +176,391 @@ class randomForestBase
 };
 \endcode
 
-There are several template parameters that allow this classes derived from this base class to implement a wide range of different behaviours:
+There are several template parameters that allow classes derived from this base class to implement a wide range of different behaviours:
 
-- <b>TDerived</b> This is  the type of the derived class, needed in order to use the CRTP form of static polymorphism. 
-- <b>TLabel</b> The type of the <b>label</b> (the variable to be predicted). This can in principle be an arbitrary type.
-- <b>TNodeDist</b> This is the type of the <b>node distribution</b>, which must have a specific form dictated by the choice of <b>TLabel</b>.
-- <b>TOutputDist</b> This is the type of the <b>output distribution</b>, which must have a specific form dictated by the choice of <b>TNodeDist</b>.
-- <b>TNumParams</b> This is the number of parameters of the feature callback function.
+- <b>TDerived</b> This is  the type of the derived class, needed in order to use the
+<a href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">CRTP</a>
+form of static polymorphism.
+- <b>TLabel</b> The type of the <b>label</b> (the variable to be predicted).
+This can in principle be an arbitrary type.
+- <b>TNodeDist</b> This is the type of the <b>node distribution</b>, which must
+have a specific form dictated by the choice of <b>TLabel</b>.
+See \ref node_dist.
+- <b>TOutputDist</b> This is the type of the <b>output distribution</b>, which
+must have a specific form dictated by the choice of <b>TNodeDist</b>.
+See \ref output_dist.
+- <b>TNumParams</b> This is the number of parameters of the feature callback functor.
+See \ref functors.
 
-Specific random forest models may be derived from this base class using CRTP with a specific set 
-of these template parameters (although TNumParams is typically left unspecified). 
+Specific random forest models may be derived from this base class using
+<a href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">CRTP</a>
+with a specific set of these template parameters (although \b TNumParams is typically left unspecified).
 
-Canopy preovides two pre-defined random forest models:
+Canopy proivides two pre-defined random forest models:
 
-- <b>classifier</b> A random forest classifier to predict a discrete label (TLabel = int) 
-with a discreteDistribution object serving as the node and output distribution type
-(TNodeDist = discreteDistribution and TOutputDist = discreteDistribution).
-- <b>circularRegressor</b>  A random forest model for predicting a circular-valued
-(angular) output variable, represented using a floating point number (TLabel = float)
-and using a vonMisesDistribution object as the node and output distribution type.
+- <b>canopy::classifier</b> A random forest classifier to predict a discrete label (\b TLabel = \c int)
+with a canopy::discreteDistribution object serving as the node and output distribution type
+(\b TNodeDist = canopy::discreteDistribution and \b TOutputDist = canopy::discreteDistribution).
+- <b>canopy::circularRegressor</b>  A random forest model for predicting a circular-valued
+(angular) output variable, represented using a floating point number (\b TLabel = \c float)
+and using a canopy::vonMisesDistribution object as the node and output distribution type.
+
+Furthermore, you can inherit from this base class to \ref custom_forest "define your own random forest model"
+for other tasks.
 
 \section functors Defining Feature Functors
 
-Canopy handles features using functor objects in order to give maximum flexibility
-for the feature calculation process to execute arbitrary code and access arbitrary data.
+Canopy handles features during both testing and traning using functor objects in
+order to allow for maximum flexibility for the feature calculation process to
+to execute arbitrary user code and access arbitrary user data.
 
 There are two different forms of feature functor that are accepted by canopy under
-different circumstances. The difference between these two forms is how they 
+different circumstances. The difference between these two forms is how they
 handle multiple test data.
 
-In both cases, the purpose of the functor object is to take some test points 
-identified by some ID type, apply some function to them specified by some 
+In both cases, the purpose of the functor object is to take some test points
+identified by some <b>"ID"</b> type, apply some function to them specified by some
 number of integer-valued parameters, and return a single floating-point
 value for each input ID as the result.
 
-The ID can be any arbitrary data type used to identify a test data point.
+The <b>ID</b> can be any arbitrary data type used to identify a test data point.
 The ID variables are not used or moved around by Canopy methods, so
-it really doesn't matter what this is as long as your own functors can make
-sense of it. In the simplest case (as in the provided example), the ID is simply 
-an integer representing the index of the test sample in some list. However, it
-could be more complicated than this, for example it could be a 2D vector 
-representing an image location in an image, or a 3D vector representing
+it really doesn't matter what they are as long as your own functors can make
+sense of them. In the simplest case (as in the \ref example "provided example"),
+the ID is simply an integer representing the index of the test sample in some
+list. However, it could be more complicated than this, for example it could be
+a 2D vector representing an image location in an image, or a 3D vector representing
 a 3D location within a volume image.
 
 The function that the functor applies to each test data point can be parameterised
-by an arbitrary number of integer-valued parameters, which are passed to the 
-functor by const reference in a std::array. The number of parameters is controlled 
-by the TNumParams template parameter of the base class. Again it is up to you to 
-define the meaning to these parameters, the Canopy code just passes them around
-without using them.
+by an arbitrary number of integer-valued parameters, which are passed to the
+functor by const reference in a std::array. The number of parameters is controlled
+by the <b>TNumParams</b> template parameter of the base class. Again it is up to
+you to define the meaning of these parameters, the Canopy code just passes them
+around without using them.
+
+\subsection single Single Feature Functors
 
 The first of the two forms calculates the features for test data in a one-by-one fashion.
 We will refer to this form as the <b>Single Feature Functor</b> form.
 This is the simplest option and involves the smallest overhead.
 
-The form of this type is:
+A <b>Single Feature Functor</b> to be used with a forest with \b TNumParams = \c MyNumParams
+and using ID type \c MyIDType must look like this:
 
 \code{.cpp}
+struct MySingleFeatureFunctor
+{
+	float operator() (const MyIDType id, const std::array<int,MyNumParams>& params)
+	{
+		// Add your code here to apply the feature calculation process to 'id' using the parameters in 'params'
+		// and return the result
+	}
+
+	// Other user defined data and methods can go here if you want
+};
 \endcode
 
+\subsection groupwise Groupwise Feature Functors
+
 The second form allows for calculating the features for multiple test points
-together. We will refer to this as the <b><Groupwise Feature Functor</b> form. 
-This can be advantageous when such a process can be made quicker 
+together. We will refer to this as the <b>Groupwise Feature Functor</b> form.
+This can be advantageous when such a process can be made quicker
 than evaluating the test data individually. For example, if the test data are different
 image locations in the same image, then it may be faster the perform some process
 (e.g. an FFT) on the entire image than work on each point individually.
 
-In both cases, the functor must provide the paranthesis operator, operator(), 
-of the form above. There are two ways to do this. The first is to define a custom 
-class or struct with and define the operator(). This allows you to encapsulate 
+This form will be referred to as the <b>Groupwise Feature Functor</b>. In contrast
+to the <b>Single Feature Functor</b>, which receives a single ID variable directly,
+the <b>Groupwise Feature Functor</b> receives multiple IDs via iterators. Because
+canopy uses some moderately complex iterator hackery internally, working out the
+type of the iterator it will pass your functor can be a little complicated.
+Therefore, I strongly recommend defining a method template and letting the compiler
+do the type inference for you. Taking this approach, a
+<b>Groupwise Feature Functor</b> for use with a forest with \b TNumParams = \c MyNumParams
+should look like this:
+
+\code{.cpp}
+struct MyGroupwiseFeatureFunctor
+{
+	// TIdIterator will be deduced by the compiler for you
+	template<class TIdIterator>
+	void operator() (TIdIterator first_id, const TIdIterator last_id, const std::array<int,MyNumParams>& params, std::vector<float>::iterator out_it)
+	{
+		// Add your code here to iterate thhrough the elements between first_id and last_id and apply the feature calculation process to each id using
+		// the parameters in 'params' and place the result in the corresponding location in 'out_it'
+
+		// You may assume that TIdIterator is a random access iterator type and dereferences to your ID type
+	}
+
+	// Other user defined data and methods can go here if you want
+};
+\endcode
+
+If you unsure about what a random access iterator is and how to use it, see
+<a href="http://en.cppreference.com/w/cpp/iterator">here</a>.
+
+Note also that it is entirely possible to define an object that can serve as either
+a <b>Single Feature Functor</b> or <b>Groupwise Feature Functor</b> by overloading
+the \c operator() for both cases.
+
+\subsection thread_safety Thread Safety of Feature Functors
+
+Because canopy uses OpenMP threads to query the different trees in a forest in
+parallel, the feature functors will be used simultaneously by multiple threads.
+It is your responsililty to ensure that the functors are thread-safe, i.e. there
+are no data races that can be caused due to access from multiple threads.
+If there are potential data races, you should use OpenMP lock variables to
+prevent them.
+
+Alternatively you can run with a single thread by compiling without OpenMP
+(remove the \c -fopenmp directive in g++). This will give you some compiler warnings
+about unknown pragmas, but otherwise the code will compile and run fine, but usually
+execute slower than with multiple threads.
+
+\subsection lambdas Using Lambdas As Feature Functors
+
+So far we have considered creating a custom \c struct (or \c class) to act as our
+functor. This is attractive as it allows you to encapsulate
 the feature extraction process along with all its data in a single object.
 
-The second option is to use a C++11 lambda function. The advantage of this
-approach is that it can easily access data defined elsewhere in your programme
-via lambda captures. However, with C++11, you will need to manually work out
-all the types of the the operator() parameters, which ends up being quite complicated
-due to the iterator trickery buried within Canopy. Luckily however , the C++14 standard
-fixes this problem by allowing you to define generic lambdas using the auto keyword 
-in place of the types. 
+There is another option though, the use of a C++11
+<a href="http://www.cprogramming.com/c++11/c++11-lambda-closures.html">lambda</a>.
+This approach is attractive because it requires less "boilerplate" code and the
+lambda can easily access data defined elsewhere in your programme via lambda
+captures. Defining a <b>Single Feature Functor</b> for a forest model with
+\b TNumParams = \c MyNumParams and using ID type \c MyIDType using a lambda
+would look like this:
 
-\section traning Training A Forest Model
+\code{.cpp}
+auto MySingleFeatureLambda = [] (const MyIDType id, const std::array<int,MyNumParams>& params)
+{
+	// Add your code here to apply the feature calculation process to 'id' using the parameters in 'params'
+	// and return the result
+};
+\endcode
 
-In order to train a model you must create a <b>Groupwise Feature Functor</b> object 
-and pass it to the randomForestBase's train() method. 
+However, extending this to the <b>Groupwise Feature Functor</b> causes some headaches
+because of those tricky iterator types. With C++11, you would need to manually
+work out all those types. Luckily however, the C++14 standard fixes this problem
+by allowing you to define generic lambdas using the \c auto keyword in place of
+the types. Then the compiler will deduce the types for you based on how the
+lambda is called from within the canopy code.
+Again assuming we are working with a forest model with
+\b TNumParams = \c MyNumParams and using ID type \c MyIDType, a <b>Groupwise Feature Functor</b>
+implemented using a lambda will look like this:
 
-Additionally, you must define a second functor object that generates valid combination of 
+\code{.cpp}
+auto MyGroupwiseFeatureLambda = [] (auto first_id, const auto last_id, const std::array<int,MyNumParams>& params, std::vector<float>::iterator out_it)
+{
+	// Add your code here to iterate thhrough the elements between first_id and last_id and apply the feature calculation process to each id using
+	// the parameters in 'params' and place the result in the corresponding location in 'out_it'
+
+	// You may assume that the type of first_id and last_id is a random access iterator type and dereferences to your ID type
+};
+\endcode
+
+The \ref example "example" provides an example of using a lambda as a feature functor
+that captures local data.
+
+\section training Training A Forest Model
+
+In order to train a model you must create a <b>Groupwise Feature Functor</b> object
+and pass it to the randomForestBase's train() method.
+
+\subsection params Parameter Generator Functors
+
+Additionally, you must define a second functor object that generates valid combinations of
 parameters for your split functors on demand. Which combinations are valid depends entirely
 on the feature calculation process that you are using.
 
-The <b>Parameter Generator Functor</b> must take the following form:  
+The <b>Parameter Generator Functor</b> for a forest model with \b TNumParams = \c MyNumParams
+must take the following form:
+
+\code{.cpp}
+struct MyParameterGeneratorFunctor
+{
+	void operator() (std::array<int,MyNumParams>& params)
+	{
+		// Generate a random valid combination of parameters and store in params
+	}
+
+	// Other user defined data and methods can go here if you want
+};
+\endcode
+
+Alternatively you could use a lambda, as follows:
+
+\code{.cpp}
+auto MyParameterGeneratorLambda = [] (std::array<int,MyNumParams>& params)
+{
+	// Generate a random valid combination of parameters and store in params
+};
+\endcode
+
+A third option, if your parameter generation problem is straightforward, is to
+use the provided canopy::defaultParameterGenerator class. This can handle cases
+where the parameters can be generated independently from a uniform distribution
+over the integers between 0 and some user-defined upper limit.
+
+\subsection train_method Using The Train Method
+
+Once you have created your feature functor and parameter generation functor,
+and list of IDs of the data points in the training set, you are ready to train
+the model. You do this by creating a forest model object and calling the canopy::randomForestBase::train()
+method.
+
+As an example, for a canopy::classifier model, this looks something like this:
+
+\code{.cpp}
+canopy::classifier<MyNumParams> my_classifier(my_num_classes,my_num_trees,my_num_levels);
+my_classifer.train(my_first_training_id,my_last_training_id,my_first_label,my_feature_functor,my_param_functor,my_num_param_trials);
+\endcode
+
+\c my_num_classes defines the number of classes in the classfication function.
+\c my_num_trees and \c my_num_levels respectively define the number of trees
+in the forest model, and the number of levels in each tree.
+The training set is defined by a pair of iterators to ID variables (\c my_first_training_id
+and \c my_last_training_id) along with the corresponding values of the label (my_first_label).
+The \c my_num_param_trials controls how many features are tested in each split node.
+
+Once a model has been trained, it can be stored in a file for later use using
+the canopy::randomForestBase::writeToFile() method.
+
+\section distribution_prediction Distribution Prediction
+
+Recall that the distribution prediction task is that of predicting an \b output
+\b distribution over the label variable by combining the \b node \b distributions
+reached in each of the trees.
+
+To do this we first need to create an <b>output distribution</b> object for each
+of the data points. We can then pass these objects to the forest model and have
+it update the parameters based on the features. The type of the  <b>output distribution</b>
+depends on the specific forest model being used. For a canopy::classifier model,
+it is a canopy::discreteDistribution, and for a canopy::circularRegressor it is
+a canopy::vonMisesDistribution.
+
+There are two methods for distribution prediction. The first, canopy::randomForestBase::predictDistSingle()
+uses a <b>Single Feature Functor</b> to calculate the features. The second
+canopy::randomForestBase::predictDistGroupwise() performs the same function but uses a <b>Groupwise Feature Functor</b>
+instead.
+
+Doing this for a canopy::classifier looks something like this:
+
+\code{.cpp}
+// Create array of output distributions
+std::vector<canopy::discreteDistribution> dists(num_test_data_points);
+
+// Initialise them, which in this case involves specifying the number of classes
+for(auto & d : dists)
+	d.initialise(num_classes);
+
+// Use the methods to find the parameters of the distributions
+my_classifier.predictDistSingle(my_first_test_id,my_last_test_id,dists.begin(),my_single_feature_functor);
+// Or...
+my_classifier.predictDistGroupwise(my_first_test_id,my_last_test_id,dists.begin(),my_groupwise_feature_functor);
+
+// Now the forest has found the distribution's parameters, we can use them for whatever
+std::cout << dists[0].pdf(1) << std::endl; // output probability that ID 0 has class label 1
+\endcode
+
+\section probability_evaluation Probability Evaluation
+
+Recall that <b>probability evaluation</b> is the task of evaluating the probability of
+certain label, according to the forest. It is worth briefly considering how this
+is different to simply performing the <b>distribution prediction</b> task, and then just
+evaluating the probability of the label according to the output distribution (which
+is what we did in the final line of the above snippet). The <b>probability evaluation</b>
+task evaluates the probability of the label under each <b>node distribution</b>
+and then averages the result, whereas the <b>distribution prediction</b> combines
+several <b>node distributions</b> and then finds the probability according to this
+combined distribution.
+
+Where it is possible to find a method of combining the
+distributions in a way that does not result in loss of information, the result is
+exactly the same. This is the case with the discrete distribution. However it is
+\b not the case with the von Mises distribution in the cirular regression task.
+In the latter case, the <b>distribution prediction</b> procedure combines several
+von Mises distributions to create a further von Mises distribution using a sensor-fusion
+approach that results in loss of information. This is easy to see, because a
+uni-modal von Mises distribution cannot possibly fully represent the combination
+of several other distributions that each have different means. Consequently you
+will get a different answer for probability of a certain label if you use the
+direct <b>probability evaluation</b> approach compared to if you use the
+<b>distribution prediction</b>.
+
+Therefore, in general, if you want to evaluate the probabilty of a certain label
+you should use the direct <b>probability evaluation</b> approach. The <b>distribution prediction</b>
+task is more useful if you want some summary statistics, such as a point estimate
+of the mean or variance.
+
+With that said, let's look at how to perform <b>probability evaluation</b>. Like
+in the <b>distribution prediction</b>, there are both single and groupwise versions
+that are otherwise equivalent (canopy::randomForestBase::probabilitySingle() and
+canopy::randomForestBase::probabilityGroupwise()). Now however, we don't need to
+pass in any distribution, but we do need the method some container of floats in
+which to place the results, and the values of the labels for which it is to
+evaluate the probability.
+
+\code{.cpp}
+// Container to hold the results
+std::vector<float> results(num_test_ids);
+the_classifier.probabilitySingle(my_first_test_id,my_last_test_id, my_first_label, results.begin(), false, my_single_feature_functor);
+// Or...
+the_classifier.probabilityGroupwise(my_first_test_id,my_last_test_id, my_first_label, results.begin(), false, my_groupwise_feature_functor);
+\endcode
+
+These methods can either evaluate the probability of a single label for multiple
+test IDs, or each test ID can have its own value of the label, depending on the
+value of the 5th parameter.
+
+\section example A Full Example
+
+This example file may be found in the \c examples directory of the canopy repository
+along with a \c Makefile that can be used to compile it using GNU make and g++.
+
+It implements a toy example using a random forest classifier to classify
+a number of data points into different classes. The features are randomly generated
+from a Gaussian distribution with a different, randomly-generated mean and
+variance for each class and pre-stored in an array.
+
+\include canopy_example.cpp
+
+To build this example in GNU/Linux with GNU make, do the following:
+
+\code{.sh}
+cd path/to/canopy/example
+make
+\endcode
+
+To run:
+
+\code{.sh}
+./canopy_example
+\endcode
+
+To clean-up:
+
+\code{.sh}
+make clean
+\endcode
+
+For hints on how to do this in other environments, see \ref compile.
 
 */
 
 /*!
-\page existing "Using Existing Models"
-*/
 
-/*!
-\page creating "Creating Your Own Random Forest Model"
+\page advanced Advanced Usage - Defining Your Own Models
+
+\tableofcontents
+
+This page is under construction
+
+\section node_dist Defining Your Own Node Distribution
+
+\section output_dist Defining Your Own Output Distribution
+
+\section custom_forest Defining Your Own Forest Model
+
 */

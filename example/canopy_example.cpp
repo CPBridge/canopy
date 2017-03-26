@@ -8,20 +8,27 @@
 // The canopy classifier header
 #include <canopy/classifier/classifier.hpp>
 
+/* This programme demonstrates how to use the basic functionality of the canopy
+library. It trains a random forest classifier to proedict the discrete label
+of test data given some features. The features are randomly generated from
+a Gaussian distribution with different, randomly-chosen mean and variance
+parameters for each of the discrete classes.
+*/
+
 int main()
 {
 	/* Parameters of the test */
-	constexpr unsigned N_CLASSES = 3;
+	constexpr unsigned N_CLASSES = 3; // number of discrete class labels
 	constexpr unsigned TRAINING_DATA_PER_PER_CLASS = 200;
 	constexpr unsigned TOTAL_TRAINING_DATA = N_CLASSES * TRAINING_DATA_PER_PER_CLASS;
 	constexpr unsigned N_DIMS = 2; // dimensionality of the feature space
-	constexpr double MIN_MU = 0.0;
-	constexpr double MAX_MU = 10.0;
-	constexpr double MAX_SIGMA = 3.0;
-	constexpr int N_TREES = 128;
-	constexpr int N_LEVELS = 10;
-	constexpr unsigned N_TESTS = 10;
-	const std::string FILENAME = "example_model.tr";
+	constexpr double MIN_MU = 0.0; // range of the randomly-generated mean parameters (min)
+	constexpr double MAX_MU = 10.0; // range of the randomly-generated mean parameters (max)
+	constexpr double MAX_SIGMA = 3.0; // maximum value for randomly-generated standard deviation parameters
+	constexpr int N_TREES = 128; //number of trees in the random forest
+	constexpr int N_LEVELS = 10; // maximum number of levels in each tree
+	constexpr unsigned N_TESTS = 10; //number of test data
+	const std::string FILENAME = "example_model.tr"; // file to save the model in
 
 	/* Set up random number generation */
 	std::default_random_engine rand_engine;
@@ -63,24 +70,40 @@ int main()
 	}
 
 	/* Create a classifer object and initialise with the number of classes, trees
-	and levels */
+	and levels. The TNumParams template parameter is one because there is a single
+	parameter of the feature calculation process, which indexes the different features
+	in the list */
 	canopy::classifier<1> the_classifier(N_CLASSES,N_TREES,N_LEVELS);
 
-	/* In order to train the model, we need a function object to return the
-	features from the array. A C++14 generic lambda is a convenient way to do this
+	/* Create a groupwise feature functor object in order to train the model.
+	A C++14 generic lambda is a convenient way to do this
 	as it can capture the data array by reference and figure out all the types
 	for us */
 	auto train_feature_lambda = [&] (auto first_id, const auto last_id, const std::array<int,1>& params, std::vector<float>::iterator out_it)
 	{
+		/* Iterate over the IDs */
 		while(first_id != last_id)
 		{
+			/* ID for this data point found by dereferencing iterator */
 			const int id = *first_id;
-			*out_it++ = training_data_features[id][params[0]];
+
+			/* The first and only parameter represents the dimension of the
+			feature space to use */
+			const int d = params[0];
+
+			/* Look up the pre-calculated feature value for this ID and dimension
+			and place it in the output iterator
+			(The training_data_features array is captured by reference) */
+			*out_it++ = training_data_features[id][d];
+
+			/* Advance the iterator */
 			++first_id;
 		}
 	};
 
-	/* We also need a way of generating valid parameter values for training */
+	/* Create a parameter generator functor for training, which simply selects a
+	random dimension. We could equally well use a canopy::defaultParameterGenerator
+	here */
 	auto param_lambda = [&] (std::array<int,1>& params)
 	{
 		params[0] = uni_int_dist(rand_engine,std::uniform_int_distribution<int>::param_type{0,N_DIMS-1});
@@ -97,16 +120,16 @@ int main()
 	/* We can now write the model a file for later use */
 	the_classifier.writeToFile(FILENAME);
 
-	/* Generate some unseen test data */
+	/* Generate some unseen test data from the same distributions */
 	std::array<std::array<double,N_DIMS>,N_TESTS> test_data_features;
 	std::array<int,N_TESTS> test_data_labels;
 	for(unsigned n = 0; n < N_TESTS; ++n)
 	{
-		/* Choose a random label */
-		int c = uni_int_dist(rand_engine,std::uniform_int_distribution<int>::param_type{0,N_CLASSES-1});
+		/* Choose a random class label */
+		const int c = uni_int_dist(rand_engine,std::uniform_int_distribution<int>::param_type{0,N_CLASSES-1});
 		test_data_labels[n] = c;
 
-		/* Generate some features from with this class */
+		/* Generate some features using this class's distribution parameters */
 		for(unsigned d = 0; d < N_DIMS; ++d)
 		{
 			test_data_features[n][d] = norm_dist(rand_engine,std::normal_distribution<double>::param_type{mu[c][d],sigma[c][d]});
@@ -114,17 +137,20 @@ int main()
 	}
 
 	/* We need a way of identifying each of the data points in the test
-	set. This is done by the index of the data point in the list */
+	set. This is again done by the index of the data point in the list */
 	std::array<int,N_TESTS> test_ids;
 	std::iota(test_ids.begin(),test_ids.end(),0);
 
-	/* We need a functor to calculate the features for the test set */
+	/* We need a functor to calculate the features for the test set.
+	This is the same as before, but accesses the testing array instead of the
+	training array */
 	auto test_feature_lambda = [&] (auto first_id, const auto last_id, const std::array<int,1>& params, std::vector<float>::iterator out_it)
 	{
 		while(first_id != last_id)
 		{
 			const int id = *first_id;
-			*out_it++ = test_data_features[id][params[0]];
+			const int d = params[0];
+			*out_it++ = test_data_features[id][d];
 			++first_id;
 		}
 	};

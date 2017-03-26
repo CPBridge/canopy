@@ -1,7 +1,7 @@
 /*!
 * \file classifier.tpp
 * \author Christopher P Bridge
-* \brief Contains implementations of the methods of the classifier class
+* \brief Contains implementations of the methods of the canopy::classifier class
 */
 
 #include <limits>

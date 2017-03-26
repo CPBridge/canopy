@@ -4,7 +4,7 @@
 /*!
 * \file circularRegressor.hpp
 * \author Christopher P Bridge
-* \brief Contains declaration of the circularRegressor class
+* \brief Contains declaration of the canopy::circularRegressor class
 */
 
 #include <canopy/circularRegressor/vonMisesDistribution.hpp>

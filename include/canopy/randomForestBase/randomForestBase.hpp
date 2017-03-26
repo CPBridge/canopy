@@ -4,7 +4,7 @@
 /*!
 * \file randomForestBase.hpp
 * \author Christopher P Bridge
-* \brief Contains the declaration of the randomForestBase class.
+* \brief Contains the declaration of the canopy::randomForestBase class.
 */
 
 #include <string>

@@ -1,7 +1,7 @@
 /*!
 * \file randomForestBase.tpp
 * \author Christopher P Bridge
-* \brief Contains implementations of the methods of the randomForestBase class.
+* \brief Contains implementations of the methods of the canopy::randomForestBase class.
 */
 
 // Include template class definition
@@ -367,8 +367,8 @@ bool randomForestBase<TDerived,TLabel,TNodeDist,TOutputDist,TNumParams>::writeTo
 * \tparam TOutputIterator Type of the iterator to the output distributions. Must be
 * a forward output iterator that dereferences to TOutputDist.
 * \tparam TFeatureFunctor The type of the feature functor object. Must meet the
-* specifications for a groupwise feature functor object, meaning it must define
-* operator() with a certain form.
+* specifications for a \ref groupwise "groupwise feature functor" object, meaning
+* it must define operator() with a certain form.
 * \param first_id Iterator to the first ID whose output is to be predicted.
 * \param last_id Iterator to the last ID whose output is to be predicted.
 * \param out_it Iterator to the output distribution corresponding to the first ID.
@@ -435,8 +435,8 @@ void randomForestBase<TDerived,TLabel,TNodeDist,TOutputDist,TNumParams>::predict
 * \tparam TOutputIterator Type of the iterator to the output distributions. Must be
 * a forward output iterator that dereferences to TOutputDist.
 * \tparam TFeatureFunctor The type of the feature functor object. Must meet the
-* specifications for a single feature functor object, meaning it must define
-* operator() with a certain form.
+* specifications for a \ref single "single feature functor" object, meaning it
+* must define operator() with a certain form.
 * \param first_id Iterator to the first ID whose output is to be predicted.
 * \param last_id Iterator to the last ID whose output is to be predicted.
 * \param out_it Iterator to the output distribution corresponding to the first ID.
@@ -509,8 +509,8 @@ void randomForestBase<TDerived,TLabel,TNodeDist,TOutputDist,TNumParams>::predict
 * a forward output iterator that dereferences to a type that supports assignment
 * to float.
 * \tparam TFeatureFunctor The type of the feature functor object. Must meet the
-* specifications for a groupwise feature functor object, meaning it must define
-* operator() with a certain form.
+* specifications for a \ref groupwise "groupwise feature functor" object, meaning
+* it must define operator() with a certain form.
 * \param first_id Iterator to the ID of the first data point for which the
 * probability of the label is to be evaluated.
 * \param last_id Iterator to the ID of the last data point for which the
@@ -573,8 +573,8 @@ void randomForestBase<TDerived,TLabel,TNodeDist,TOutputDist,TNumParams>::probabi
 * function object that has an operator() of the form float operator()(TOutput, float)
 * where TOutput is the type that TOutputIterator dereferences to.
 * \tparam TFeatureFunctor The type of the feature functor object. Must meet the
-* specifications for a groupwise feature functor object, meaning it must define
-* operator() with a certain form.
+* specifications for a \ref groupwise "groupwise feature functor" object, meaning
+* it must define operator() with a certain form.
 * \tparam TPDFFunctor The type of the pdf_functor argument. Must be a function
 * object that has an operator() of the form float operator()(TNodeDist*, TLabel, TId).
 * \param first_id Iterator to the ID of the first data point for which the
@@ -664,8 +664,8 @@ void randomForestBase<TDerived,TLabel,TNodeDist,TOutputDist,TNumParams>::probabi
 * a forward output iterator that dereferences to a type that supports assignment
 * to float.
 * \tparam TFeatureFunctor The type of the feature functor object. Must meet the
-* specifications for a groupwise feature functor object, meaning it must define
-* operator() with a certain form.
+* specifications for a \ref single "single feature functor" object, meaning
+* it must define operator() with a certain form.
 * \param first_id Iterator to the ID of the first data point for which the
 * probability of the label is to be evaluated.
 * \param last_id Iterator to the ID of the last data point for which the
@@ -728,8 +728,8 @@ void randomForestBase<TDerived,TLabel,TNodeDist,TOutputDist,TNumParams>::probabi
 * function object that has an operator() of the form float operator()(TOutput, float)
 * where TOutput is the type that TOutputIterator dereferences to.
 * \tparam TFeatureFunctor The type of the feature functor object. Must meet the
-* specifications for a groupwise feature functor object, meaning it must define
-* operator() with a certain form.
+* specifications for a \ref single "single feature functor", meaning it must
+* define operator() with a certain form.
 * \tparam TPDFFunctor The type of the pdf_functor argument. Must be a function
 * object that has an operator() of the form float operator()(TNodeDist*, TLabel, TId).
 * \param first_id Iterator to the ID of the first data point for which the
@@ -803,8 +803,8 @@ void randomForestBase<TDerived,TLabel,TNodeDist,TOutputDist,TNumParams>::probabi
 * \tparam TIdIterator Type of the iterator to the IDs. Must be a random access
 * iterator and dereference to the TId type expected by the feature functor.
 * \tparam TFeatureFunctor The type of the feature functor object. Must meet the
-* specifications for a groupwise feature functor object, meaning it must define
-* operator() with a certain form.
+* specifications for a \ref groupwise "groupwise feature functor" object, meaning
+* it must define operator() with a certain form.
 * \param first_id Iterator to the ID of the first data point for which the
 * leaf distribution is to be found.
 * \param last_id Iterator to the ID of the last data point for which the
@@ -889,8 +889,8 @@ void randomForestBase<TDerived,TLabel,TNodeDist,TOutputDist,TNumParams>::findLea
 *
 * \tparam TId Type of the ID used to identify the data point.
 * \tparam TFeatureFunctor The type of the feature functor object. Must meet the
-* specifications for a groupwise feature functor object, meaning it must define
-* operator() with a certain form.
+* specifications for a \ref single "single feature functor" object, meaning it
+* must define operator() with a certain form.
 * \param first_id ID of the data point for which the leaf distribution is to be
 * found.
 * \param treenum Index of the tree to use.
@@ -927,10 +927,11 @@ const TNodeDist* randomForestBase<TDerived,TLabel,TNodeDist,TOutputDist,TNumPara
 * feature_functor.
 * \tparam TLabelIterator Type of the iterator used to access the label variables.
 * Must be a random access iterator that dereferences to type TLabel.
-* \tparam TFeatureFunctor Type of the feature_functor parameter. Must be a function
-* object with an operator() of a specfied form.
+* \tparam TFeatureFunctor Type of the feature_functor parameter. Must be a
+* \ref groupwise "groupwise feature functor" object with an operator() of a
+* specified form.
 * \tparam TParameterFunctor Type of the feature_functor parameter. Must be a
-* function object with an operator() of the form
+* \ref params "parameter generator functor" object with an operator() of the form
 * void operator()(std::array<int,TNumParams>&)
 * \param first_id Iterator to the ID of the first element in the training list.
 * \param last_id Iterator to the ID of the last element in the training list.

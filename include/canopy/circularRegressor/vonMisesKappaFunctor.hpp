@@ -4,7 +4,7 @@
 /*!
 * \file vonMisesKappaFunctor.hpp
 * \author Christopher P Bridge
-* \brief Contains declaration of vonMisesKappaFunctor struct, used for numerically
+* \brief Contains declaration of the canopy::vonMisesKappaFunctor struct, used for numerically
 * solving for the kappa parameter of the von Mises distribution
 */
 

@@ -4,7 +4,7 @@
 /*!
 * \file classifier.hpp
 * \author Christopher P Bridge
-* \brief Contains the declaration of the classifier class
+* \brief Contains the declaration of the canopy::classifier class
 */
 
 #include <canopy/randomForestBase/randomForestBase.hpp>

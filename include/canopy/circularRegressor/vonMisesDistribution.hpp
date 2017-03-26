@@ -4,8 +4,8 @@
 /*!
 * \file vonMisesDistribution.hpp
 * \author Christopher P Bridge
-* \brief Contains the vonMisesDistribution class, which is the node and
-* output distribution for the circularRegressor.
+* \brief Contains the canopy::vonMisesDistribution class, which is the node and
+* output distribution for the canopy::circularRegressor.
 */
 
 #include <cmath>

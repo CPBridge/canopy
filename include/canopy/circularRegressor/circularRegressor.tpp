@@ -1,7 +1,7 @@
 /*!
 * \file circularRegressor.tpp
 * \author Christopher P Bridge
-* \brief Contains implementations of the methods of the circularRegressor class
+* \brief Contains implementations of the methods of the canopy::circularRegressor class
 */
 
 #include <algorithm>

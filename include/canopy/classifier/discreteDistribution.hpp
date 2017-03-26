@@ -4,7 +4,7 @@
 /*!
 * \file discreteDistribution.hpp
 * \author Christopher P Bridge
-* \brief Contains the discreteDistribution class, which is the node and
+* \brief Contains the canopy::discreteDistribution class, which is the node and
 * output distribution for the classifier.
 */
 
