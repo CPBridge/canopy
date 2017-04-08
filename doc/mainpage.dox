@@ -555,11 +555,53 @@ For hints on how to do this in other environments, see \ref compile.
 
 \tableofcontents
 
-This page is under construction
+If you want to define your own model using canopy, there are up to four steps
+you need to complete:
+
+- Choose the label type of model.
+- Define the node distribution class you wish the model to use.
+- Define the output distribution class you wish the model to use. You only need
+to do this if you want to perform the <b> distribution prediction </b> task.
+- Define the forest model itself.
+
+These three tasks must be completed in this order because each depends on the
+previous. However in some situations it may be possible to re-use one of the
+node or output distributions already defined in canopy, in which case you can
+that step. Furthermore, in some situations the node distribution and output
+distributions may be the same (this is the case for the canopy::classifier and
+canopy::circularRegressor models). In this case you just need to implement the
+behaviour of both models within one class.
+
+The next four sections describe this process in detail.
+
+\section choose_label Choosing A Label Type
+
+Firstly, you need to choose the data type that you want your forest to predict
+In principle, this can be any data type. For example, the label type of the
+canopy::classifier is \c int, and the label type of the canopy::circularRegressor
+is \c float.
+
+For the sake of this tutorial, let's assume that we've chosen a label type
+of \c myLabelType.
 
 \section node_dist Defining Your Own Node Distribution
 
+The node distribution class defines the distribution that is stored in the leaf
+node of each tree in the forest. Conceptually, it should capture the behaviour
+of a probability distribution over the label type (\c myLabelType in our example).
+
+There are a number of methods that the class <b>must</b> define in order to be
+used as a node distribution within canopy. You are of course free to add other
+methods or properties to give the class the behaviour you need.
+
+The following example gives the required layout of the class. It might be easier
+for you to copy this file, change the type names, and fill in the blanks:
+
+\include myNodeDist.hpp
+
 \section output_dist Defining Your Own Output Distribution
+
+\include myOutputDist.hpp
 
 \section custom_forest Defining Your Own Forest Model
 
