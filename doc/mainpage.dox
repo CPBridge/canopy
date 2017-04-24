@@ -601,7 +601,39 @@ for you to copy this file, change the type names, and fill in the blanks:
 
 \section output_dist Defining Your Own Output Distribution
 
+The output distribution class defines the distribution that is created as the
+result of the <b>distribution prediction</b> task. It combines (in some sense
+that you can define) the node distributions reached in each forest for a given
+data point to produce a new distribution.
+
+The class is required to have the layout in the following example:
+
 \include myOutputDist.hpp
+
+To make sense of the tasks that should be performed by the three methods, it is
+helpful to understand the order in which they are called by the canopy::randomForestBase
+class. Recall from the \ref basic "basic usage" instructions that the user code
+creates the output distribution object and passes it to the forest's
+canopy::randomForestBase::predictDistSingle() or canopy::randomForestBase::predictDistGroupwise()
+method (via an iterator). Then that method calls uses the output distribution's
+methods as follows:
+
+- First the \c reset() method is called. This should clear any existing data from
+the class such that it is ready for use with the combineWith method. This can
+ensure for example that if the user passes the same output distribution object to
+two calls of the \c predictDistSingle/predictDistGroupwise method, the second call
+overwrites any information from the first.
+- Next the forest finds which leaf nodes the input ID reaches. It then calls the
+\c combineWith() method of the output distribution once for each of these node
+distributions (i.e. once for each of the trees in the forest), passing a reference
+to the relevant node distribution object. The method should update the parameters
+of the output distribution object to reflect the inclusion of that leaf node. Note
+that the node distributions are passed in the order they appear in the list of trees
+in the forest, and in a single thread (i.e. you do not need to worry about data
+races within the \c combineWith() method).
+- After the \c combineWith() method has been called for all the trees in the forest,
+the \c normalise() method is called once. This can therefore be used to ensure
+that the resulting parameters represent a valid distribution.
 
 \section custom_forest Defining Your Own Forest Model
 
