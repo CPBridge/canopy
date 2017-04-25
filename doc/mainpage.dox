@@ -572,7 +572,10 @@ distributions may be the same (this is the case for the canopy::classifier and
 canopy::circularRegressor models). In this case you just need to implement the
 behaviour of both models within one class.
 
-The next four sections describe this process in detail.
+The next four sections describe this process in detail. You should read these
+and read the existing code for canopy::classifier and canopy::circularRegressor
+along with canopy::discreteDistribution and canopy::vonMisesDistribution in
+order to understand how to build your own forest model.
 
 \section choose_label Choosing A Label Type
 
@@ -637,4 +640,53 @@ that the resulting parameters represent a valid distribution.
 
 \section custom_forest Defining Your Own Forest Model
 
+In order to define your own forest model you need to define a class with a layout
+following the example below:
+
+\include myForest.hpp
+
+Note that your class should inherit from the canopy::randomForestBase class, and
+provide the 5 template parameters of the base class. The 2nd, 3rd, and 4th
+template parameters are respectively the label type, the node distribution type
+and the output distribution type, which need to match the relevant types of your
+node and output distribution models.
+
+The first template parameter must be the
+type of your own forest model (being) declared. This is in order to implement
+the <a href="http://en.m.wikipedia.org/wiki/Curiously_recurring_template_pattern">CRTP</a>
+idiom of static polymorphism.
+
+The final template parameter is the number of parameters of the feature functor,
+and you will often want to make this a template parameter of your model also (as
+in the example) to allow for maximum flexibility.
+
+The most complicated task in defining your own model is defining the training
+procedure, which is controlled by the implementations of the \c trainingPrecalculations,
+\c cleanupPrecalculations, \c singleNodeImpurity, \c bestSplit, and \c minInfoGain
+methods.
+
+These methods are called by the base class's training procedure as follows:
+
+- The \c trainingPrecalculations method is called on the entire training dataset
+in order to perform any necessary pre-calculations.
+- Then the training continues on a node-by-node basis, starting at the root
+of each tree (trees are trained independently and in parallel). Each node receives
+a list of training IDs from its parent node. It then calculates the 'impurity'
+before splitting with the singleNodeImpurity method in a sense defined by you1.
+- Next, a number of random generated feature functor parameter sets are generated
+and applied to the IDs in the node. Each parameter set results in a feature score
+value for each training ID. These are then sorted and passed to the \c bestSplit
+method, which calculates the best (in a sense defined by you) feature score threshold
+to use to split the data into two child nodes using this parameter set.
+- The parameter set resulting in the best information gain (as returned by the
+\c bestSplit method), is chosen as the feature set for that node.
+- However if the best information gain is lower than the value returned by the
+\c minInfoGain method, the node is declared as a leaf node. Training also stops
+when the maximum depth is reached or the number of training data in the node
+falls below the user-supplied threshold.
+- After training is complete for all trees, the \c cleanupPrecalculations method
+is called.
+
+The node distribution's \c fit method is also called as necessary to fit a node
+distrbution to the training dataset.
 */
