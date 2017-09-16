@@ -58,9 +58,11 @@ University of Oxford's Institute of Biomedical Engineering.
 ### Related
 
 An early version of canopy was used in the implementation of a model to analyse
-medical ultrasound videos of the fetal heart. More details are available in this
-paper:
+medical ultrasound videos of the fetal heart. More details are available in these
+documents:
 
+- C.P. Bridge, “Computer-Aided Analysis of Fetal Cardiac Ultrasound Videos”, DPhil Thesis, University of Oxford, 2017. Available on [my website](http://chrispbridge.wordpress.com/publications).
 - C.P. Bridge, C. Ioannou, and J.A. Noble, “Automated Annotation and Quantitative Description of Ultrasound Videos of the Fetal Heart”, *Medical Image Analysis 36* (February 2017) pp. 147-161. Open access available [here](http://dx.doi.org/10.1016/j.media.2016.11.006).
+- C.P. Bridge, Christos Ioannou, and J.A. Noble, “Localizing Cardiac Structures in Fetal Heart Ultrasound Video”, *Machine Learning in Medical Imaging Workshop, MICCAI, 2017*, pp. 246-255. Original article available [here](https://link.springer.com/chapter/10.1007/978-3-319-67389-9_29). Authors' manuscript available on [my website](http://chrispbridge.wordpress.com/publications).
 
 or on the author's website at <http://chrispbridge.wordpress.com/research>.
